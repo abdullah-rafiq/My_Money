@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="entry_array" >
+        <item>EXPENSE OVERVIEW</item>
+        <item>INCOME OVERVIEW</item>
+        <item>EXPENSE FLOW</item>
+        <item>INCOME FLOW</item>
+        <item>ACCOUNT analysis</item>
+    </string-array>
+</resources>

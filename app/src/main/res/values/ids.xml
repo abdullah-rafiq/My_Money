@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="textView_create_account" type="id"/>
+    <item name="editTextName" type="id"/>
+    <item name="button_sign_in" type="id"/>
+    <item name="button_continue_with_google" type="id"/>
+</resources>

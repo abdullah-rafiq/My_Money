@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_records"
+        android:icon="@drawable/records"
+        android:title="@string/records"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_analyse"
+        android:icon="@drawable/analysis"
+        android:title="@string/analyse"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_budget"
+        android:icon="@drawable/budget"
+        android:title="@string/budget"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_accounts"
+        android:icon="@drawable/accounts"
+        android:title="@string/accounts"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/nav_categories"
+        android:icon="@drawable/categories"
+        android:title="@string/categories"
+        app:showAsAction="ifRoom" />
+</menu>
