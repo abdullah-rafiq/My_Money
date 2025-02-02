@@ -19,12 +19,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.HorizontalBarChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -41,6 +45,9 @@ import java.util.Calendar
 import java.util.Locale
 
 class AnalyseFragment : Fragment() {
+    private lateinit var barChart: BarChart
+    private lateinit var horizontalBarChart: HorizontalBarChart
+
     private lateinit var pieChart: com.github.mikephil.charting.charts.PieChart
     private lateinit var btnPrevDay: ImageButton
     private lateinit var tvDate: TextView
@@ -181,7 +188,7 @@ class AnalyseFragment : Fragment() {
         floatingButton.visibility = View.GONE
     }
 
-
+    // Pie Chart
     private fun fetchDataFromFirebase() {
         val database = FirebaseDatabase.getInstance()
         val recordsRef = database.getReference("records")
@@ -254,6 +261,8 @@ class AnalyseFragment : Fragment() {
         Log.d("AnalyseFragment", "PieChart updated with ${entries.size} entries")
     }
 
+
+    // Expense, Income, Total
     private fun fetchAndUpdateFinanceSummary() {
         val database = FirebaseDatabase.getInstance()
         val recordsRef = database.getReference("records")
@@ -330,12 +339,75 @@ class AnalyseFragment : Fragment() {
             }
         })
     }
+
+    //Bar Chart
+
+    fun setupHorizontalBarChart() {
+        val database = FirebaseDatabase.getInstance()
+        val recordsRef = database.getReference("records")
+
+        recordsRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val categoryMap = HashMap<String, Float>()
+
+                for (recordSnapshot in snapshot.children) {
+                    val category = recordSnapshot.child("category").getValue(String::class.java) ?: "Unknown"
+                    val amountValue = recordSnapshot.child("amount").value
+
+                    val amount = when (amountValue) {
+                        is Number -> amountValue.toFloat()
+                        is String -> amountValue.toFloatOrNull() ?: 0f
+                        else -> 0f
+                    }
+
+                    categoryMap[category] = categoryMap.getOrDefault(category, 0f) + amount
+                }
+
+                // Convert to chart data entries
+                val entries = ArrayList<BarEntry>()
+                val categoryLabels = ArrayList<String>()
+                var index = 0
+
+                for ((category, amount) in categoryMap) {
+                    entries.add(BarEntry(index.toFloat(), amount))
+                    categoryLabels.add(category)
+                    index++
+                }
+
+                val barDataSet = BarDataSet(entries, "Expense Categories").apply {
+                    colors = ColorTemplate.MATERIAL_COLORS.toList()
+                    valueTextSize = 14f
+                }
+
+                val data = BarData(barDataSet)
+                barChart.data = data
+
+                // Customize chart
+                barChart.description.isEnabled = false
+                barChart.setFitBars(true)
+                barChart.xAxis.valueFormatter = IndexAxisValueFormatter(categoryLabels)
+                barChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+                barChart.axisLeft.setDrawGridLines(false)
+                barChart.axisRight.isEnabled = false
+                barChart.invalidate() // Refresh chart
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Failed to read data: ${error.message}")
+            }
+        })
+    }
+
+
+
+    //TO Open Charts // PIE,BAR
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         // Fetch data after view is fully created
-
-
+        horizontalBarChart = view.findViewById(R.id.horizontalBarChart)
+        barChart = view.findViewById(R.id.horizontalBarChart)
+        setupHorizontalBarChart()
         fetchAndUpdateFinanceSummary()
     }
 }

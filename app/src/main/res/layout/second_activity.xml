@@ -131,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="198dp"
-        android:layout_marginTop="185dp"
+        android:layout_marginTop="200dp"
         android:layout_marginEnd="21dp"
         android:layout_marginBottom="31dp"
         android:text="@string/next"
@@ -139,7 +139,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Back"
         app:layout_constraintTop_toBottomOf="@+id/switch1"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.066" />
 
     <Button
         android:id="@+id/Back"

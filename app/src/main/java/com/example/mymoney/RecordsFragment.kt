@@ -193,6 +193,7 @@ class RecordsFragment : Fragment() {
 
                         Log.d("FirebaseRecord", "Parsed Record - Amount: $amount, ID: $id, Type: $type")
 
+                        Toast.makeText(context, "Fetched Date: $date", Toast.LENGTH_SHORT).show()
                         val record = Record(
                             id = id,
                             type = type,

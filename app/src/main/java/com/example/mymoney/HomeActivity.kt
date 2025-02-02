@@ -47,6 +47,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var totalTextView: TextView
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
@@ -82,7 +83,18 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_analyse -> loadFragment(AnalyseFragment())
                 R.id.nav_budget -> loadFragment(BudgetFragment())
                 R.id.nav_accounts -> loadFragment(AccountsFragment())
-                R.id.nav_categories -> loadFragment(CategoriesFragment())
+                R.id.nav_map -> {
+
+                    hideHomeUI()
+
+                    val fragment = MapFragment()
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.fragment_container, fragment)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+
+                    findViewById<View>(R.id.fragment_container).visibility = View.VISIBLE
+                }
                 R.id.nav_logout -> {
                     FirebaseAuth.getInstance().signOut()
                     startActivity(Intent(this, MainActivity::class.java))
@@ -173,7 +185,6 @@ class HomeActivity : AppCompatActivity() {
             findViewById<View>(R.id.fragment_container).visibility = View.VISIBLE
             true
         }
-
     }
 
     private fun updateDate() {
