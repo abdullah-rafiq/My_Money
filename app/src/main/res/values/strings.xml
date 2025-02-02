@@ -19,7 +19,7 @@
     <string name="analyse">Analyse</string>
     <string name="budget">Budget</string>
     <string name="accounts">Accounts</string>
-    <string name="categories">Gemnini</string>
+    <string name="categories">Categories</string>
     <string name="records_fragment">Records Fragment</string>
     <string name="prev_day">prv\n</string>
     <string name="december_7_2024">December 7, 2024</string>
@@ -73,6 +73,5 @@
     <string name="drawer_close">Close Navigation Drawer</string>
     <string name="total">Total</string>
     <string name="MAPS_API_KEY">AIzaSyBNZ14Hol8Y61hI5ykjTLHb9c1MmZq7Qmc</string>
-    <string name="Gemini_API_Key">AIzaSyBHYyZXTHjrfC2_bXsOsN4qveDZ8VzAcfg</string>
 
 </resources>
